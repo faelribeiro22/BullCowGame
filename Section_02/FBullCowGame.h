@@ -4,6 +4,7 @@
 class FBullCowGame {
 
 public:
+	FBullCowGame(); // constructor
 	void Reset(); //TODO make a more rich return value.
 	int GetMaxTries() const;
 	int GetMyCurrentTry() const;
@@ -12,6 +13,6 @@ public:
 
 // Please try and ignore this and focus on the interface above ^^
 private:
-	int MyCurrentTry = 1;
-	int MaxTries = 6;
+	int MyCurrentTry;
+	int MaxTries;
 };

@@ -7,11 +7,12 @@ void PrintIntro();
 std::string GetGuess();
 void PlayGame();
 bool AskToPlayAgain();
-
+FBullCowGame BCGame; //instantiate a new game
 
 // the entry point four our application
 int main()
 {
+	std::cout << BCGame.GetMyCurrentTry();
 	do {
 
 		PrintIntro();
@@ -36,8 +37,8 @@ void PrintIntro()
 
 void PlayGame()
 {
-	FBullCowGame BCGame; //instantiate a new game
 	// repeat the guess back to them
+	BCGame.Reset();
 	constexpr int NUMBER_OF_TURNS = 5;
 	for (int count = 1; count <= NUMBER_OF_TURNS; count++)
 	{
