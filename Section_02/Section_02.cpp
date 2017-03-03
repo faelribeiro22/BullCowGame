@@ -27,9 +27,9 @@ int main()
 // introduce the game
 void PrintIntro()
 {
-	constexpr int WORLD_LENGTH = 9;
+	constexpr int WORD_LENGTH = 9;
 	std::cout << "Welcome to Bulls and Cows a fun word game.\n";
-	std::cout << "Can you guess the " << WORLD_LENGTH;
+	std::cout << "Can you guess the " << WORD_LENGTH;
 	std::cout << " letter isogran I'm thinking of?\n";
 	return;
 }
@@ -40,11 +40,17 @@ void PlayGame()
 	// repeat the guess back to them
 	BCGame.Reset();
 	constexpr int NUMBER_OF_TURNS = 5;
+	// loop for the numbers of turns asking for guesses
+	// TODO change from FOR to WHILE loop once we are validating tries
 	for (int count = 1; count <= NUMBER_OF_TURNS; count++)
 	{
-		std::string Guess = GetGuess();
+		std::string Guess = GetGuess(); // TODO make loop checking valid
+		// submit valid guess to the game
+		// print number of bulls and cows
 		std::cout << "Your guess was: " << Guess << std::endl;
 	}
+
+	// TODO summarise game 
 }
 
 bool AskToPlayAgain()

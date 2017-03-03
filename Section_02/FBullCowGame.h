@@ -10,6 +10,7 @@ public:
 	int GetMyCurrentTry() const;
 	bool IsGameWon() const;
 	bool CheckGuessValidity(std::string); //TODO make a more rich return value.
+	// provide a method for counting bulls & cows, and increassing turn # 
 
 // Please try and ignore this and focus on the interface above ^^
 private:
