@@ -7,18 +7,18 @@ FBullCowGame::FBullCowGame()
 
 void FBullCowGame::Reset()
 {
-	constexpr int MAX_TRIES = 8;
+	constexpr int32 MAX_TRIES = 8;
 	MaxTries = MAX_TRIES;
 	MyCurrentTry = 1;
 	return;
 }
 
-int FBullCowGame::GetMaxTries() const
+int32 FBullCowGame::GetMaxTries() const
 {
 	return MaxTries;
 }
 
-int FBullCowGame::GetMyCurrentTry() const
+int32 FBullCowGame::GetMyCurrentTry() const
 {
 	return MyCurrentTry;
 }
