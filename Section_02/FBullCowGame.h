@@ -5,7 +5,7 @@ using FString = std::string;
 using int32 = int;
 
 // all values initialised to zero
-struct BullCowCount
+struct FBullCowCount
 {
 	int32 Bulls = 0;
 	int32 Cows = 0;
@@ -20,7 +20,7 @@ public:
 	int32 GetMyCurrentTry() const;
 	bool IsGameWon() const;
 	bool CheckGuessValidity(FString); //TODO make a more rich return value.
-	BullCowCount SubmitGuess(FString);
+	FBullCowCount SubmitGuess(FString);
 
 // Please try and ignore this and focus on the interface above ^^
 private:
