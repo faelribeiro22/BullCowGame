@@ -11,7 +11,7 @@ user interaction. For game logic see the FBullCowGame class.
 using FText = std::string;
 
 void PrintIntro();
-FText GetGuess();
+FText GetValidGuess();
 void PlayGame();
 bool AskToPlayAgain();
 FBullCowGame BCGame; //instantiate a new game
@@ -50,16 +50,14 @@ void PlayGame()
 	
 	for (int32 count = 1; count <= MaxTries; count++) // TODO change from FOR to WHILE loop once we are validating tries
 	{
-		FText Guess = GetGuess(); 
-
-		EGuessStatus Status = BCGame.CheckGuessValidity(Guess);
+		FText Guess = GetValidGuess(); 
 
 		// submit valid guess to the game, and receive counts 
 		FBullCowCount BullCowCount = BCGame.SubmitGuess(Guess);
 		// print number of bulls and cows
 
-		std::cout << "Bulls = " << BullCowCount.Bulls << std::endl;
-		std::cout << "Cows = " << BullCowCount.Cows << std::endl;
+		std::cout << "Bulls = " << BullCowCount.Bulls << "\n";
+		std::cout << "Cows = " << BullCowCount.Cows << "\n";
 	}
 
 	// TODO summarise game 
@@ -74,11 +72,31 @@ bool AskToPlayAgain()
 }
 
 
-// get a guess from the player
-FText GetGuess() // TODO make change to GetValidGuess 
+// loop continually until the user gives a valid guess
+FText GetValidGuess() 
 {
-	std::cout << "Enter your guess: ";
-	FText Guess = "";
-	std::getline(std::cin, Guess);
-	return Guess;
+	EGuessStatus Status = EGuessStatus::Invalid_Status;
+	do
+	{
+		int32 CurrentyTry = BCGame.GetMyCurrentTry();
+		std::cout << "Try " << CurrentyTry << ". Enter your guess: ";
+		FText Guess = "";
+		std::getline(std::cin, Guess);
+		Status = BCGame.CheckGuessValidity(Guess);
+		switch (Status)
+		{
+		case EGuessStatus::Wrong_Length:
+			std::cout << "Please enter a " << BCGame.GetHiddenWorldLength() << " letter word.\n";
+			break;
+
+		case EGuessStatus::Not_Isogram:
+			std::cout << "Please enter a word without repeating letters.\n";
+			break;
+		case EGuessStatus::Not_Lowercase:
+			std::cout << "Please enter all lowercase letters.\n";
+			break;
+		default:
+			return Guess;
+		}
+	} while (Status != EGuessStatus::OK); // keep looping untill we get no errors 
 }
