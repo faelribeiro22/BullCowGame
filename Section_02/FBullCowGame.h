@@ -29,12 +29,15 @@ public:
 	int32 GetMyCurrentTry() const;
 	int32 GetHiddenWorldLength() const;
 	bool IsGameWon() const;
+	bool GetbWinGame() const;
+	void setbWinGame(bool winGame);
 	EGuessStatus CheckGuessValidity(FString) const;
-	FBullCowCount SubmitGuess(FString);
+	FBullCowCount SubmitValidGuess(FString);
 
 // Please try and ignore this and focus on the interface above ^^
 private:
 	int32 MyCurrentTry;
 	int32 MaxTries;
 	FString MyHiddenWord;
+	bool bWinGame;
 };

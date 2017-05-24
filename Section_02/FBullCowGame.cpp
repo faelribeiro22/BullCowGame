@@ -13,6 +13,7 @@ void FBullCowGame::Reset()
 	MaxTries = MAX_TRIES;
 	MyHiddenWord = HIDDEN_WORD;
 	MyCurrentTry = 1;
+	setbWinGame(false);
 	return;
 }
 
@@ -33,18 +34,28 @@ int32 FBullCowGame::GetHiddenWorldLength() const
 
 bool FBullCowGame::IsGameWon() const
 {
-	return false;
+	return GetbWinGame();
+}
+
+bool FBullCowGame::GetbWinGame() const
+{
+	return bWinGame;
+}
+
+void FBullCowGame::setbWinGame(bool winGame)
+{
+	bWinGame = winGame;
 }
 
 EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 {	
 	if (false) // if the guess isn't an isogran 
 	{
-		return EGuessStatus::Not_Isogram;
+		return EGuessStatus::Not_Isogram; // TODO write function
 	}
 	else if (false) // if the guess isn't all lowercase 
 	{
-		return EGuessStatus::Not_Lowercase;
+		return EGuessStatus::Not_Lowercase; // TODO write function
 	}
 	else if (GetHiddenWorldLength() != Guess.length()) // if the guess length is wrong
 	{
@@ -57,19 +68,18 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 }
 
 // received a VALID guess, increments turn, and returns count 
-FBullCowCount FBullCowGame::SubmitGuess(FString Guess)
+FBullCowCount FBullCowGame::SubmitValidGuess(FString Guess)
 {
-	// increment the turn number
 	MyCurrentTry++;
-	// setup a return variable
 	FBullCowCount BullCowCount;
+
 	// loop through all letters in the guess 
-	int32 HiddenWorldLength = MyHiddenWord.length();
-	int32 MyGuess = Guess.length();
-	for (int32 MHWChar = 0; MHWChar < HiddenWorldLength; MHWChar++)
+	int32 WorldLength = MyHiddenWord.length(); // assuming same length as guess
+
+	for (int32 MHWChar = 0; MHWChar < WorldLength; MHWChar++)
 	{
-		// compare letters agains the hidden word
-		for (int32 GChar = 0; GChar < HiddenWorldLength; GChar++)
+		// compare letters agains the guess
+		for (int32 GChar = 0; GChar < WorldLength; GChar++)
 		{
 			if (Guess[GChar] == MyHiddenWord[MHWChar]) { 	// if they match then
 				if (MHWChar == GChar) {
@@ -79,6 +89,13 @@ FBullCowCount FBullCowGame::SubmitGuess(FString Guess)
 					BullCowCount.Cows++; // increment cows
 				}
 			}
+		}
+		if (BullCowCount.Bulls == WorldLength) 
+		{
+			setbWinGame(true);
+		}else 
+		{
+			setbWinGame(false);
 		}
 	}
 	return BullCowCount;
